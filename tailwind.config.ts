@@ -8,14 +8,22 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      borderWidth:{
+        '1': "1.2px"
+      },
       colors:{
+        black:{
+          100: "#1A1919",
+          200: "#060E1E"
+        },
         blue:{
           100: "#316FEA"
         },
         grey:{
           100: "#A1ABB5",
           200: "#BEC5CC",
-          300: "#D3D8DC"
+          300: "#D3D8DC",
+          400: "#E3E6E9"
         }
       },
       fontFamily: {
