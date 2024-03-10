@@ -3,29 +3,30 @@ import { Button } from "@/components/Button";
 import { FormInput } from "@/components/FormInput";
 import { Github, Google } from "@/components/Icons";
 import { RHFInputGroup } from "@/components/InputGroup";
-// import { SignInDto } from "@/types/dtos";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PasswordInput } from "@/components/PasswordInput";
 import { signInSchema } from "@/core/validators";
 import Link from "next/link";
 import { Routes } from "@/core/routing";
-import { SignInDto } from "@/types/dtos";
+import { LoginDto } from "@/types/dtos";
+import { useLogin } from "@/hooks/auth/useLogin";
+import appConfig from "../../../../env.config"
 
 const Login = () => {
       const methods = useForm({ resolver: yupResolver(signInSchema), mode:"all" });
-	// const { isPending, signInWithEmail } = useSignIn();
-      const onSubmit = methods.handleSubmit((data: SignInDto) => {
-            console.log(data)
+	const { isPending, loginWithEmail } = useLogin();
+      const onSubmit = methods.handleSubmit((data: LoginDto) => {
+            loginWithEmail({
+                  email: data.email,
+                  password: data.password
+            })
       }
-      // signInWithEmail({
-      //       email: data.email,
-      //       password: data.password
-      // })
 );
+console.log(appConfig.BASE_URL);
       return (
-            <div className="flex items-center flex-col gap-10 w-full text-center">
-                  <h1 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl">Log in to your account</h1>
+            <div className="flex items-center flex-col gap-10 w-full">
+                  <h1 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl text-center">Log in to your account</h1>
                   <div className="flex items-center flex-wrap gap-4 w-full">
                         <Button
 					className="flex-1"
@@ -96,7 +97,7 @@ const Login = () => {
 
                                     <Button
                                           color="blue"
-                                          loading={false}
+                                          loading={isPending}
                                           size="lg"
                                           type="submit"
                                           variant="filled"
