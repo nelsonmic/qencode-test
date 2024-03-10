@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { basisgrotesque } from "@/styles/font";
 import "../styles/tailwind.css"
+import QueryProvider from "@/providers/Query.provider";
 
 export const metadata: Metadata = {
   title: "Qencode",
@@ -14,7 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={basisgrotesque.className}>{children}</body>
+      <body className={basisgrotesque.className}>
+        <QueryProvider>
+          {children}
+        </QueryProvider>
+      </body>
     </html>
   );
 }

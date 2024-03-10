@@ -1,18 +1,18 @@
 "use client"
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@/components/Button";
 import { RHFInputGroup } from "@/components/InputGroup";
 import { FormProvider, useForm } from "react-hook-form";
-import { emailSchema, resetPasswordSchema } from "@/core/validators";
+import { resetPasswordSchema } from "@/core/validators";
 import { PasswordInput } from "@/components/PasswordInput";
+import { useResetPassword } from "@/hooks/auth/useResetPassword";
 
 const ResetPassword = () => {
 	const methods = useForm({ resolver: yupResolver(resetPasswordSchema) });
-
-	const onSubmit = methods.handleSubmit((data: { password: string }) => {
-		console.log(data)
-	});
+	const { isPending, resetPassword } = useResetPassword();
+	const onSubmit = methods.handleSubmit((data: { password: string }) =>
+		resetPassword({ password: data.password, token: "", secret: "" })
+	);
 
       return (
             <div className="flex items-center flex-col gap-10 w-full">
@@ -35,14 +35,14 @@ const ResetPassword = () => {
 						<PasswordInput
 							id="confirmPassword"
 							label="Confirm Password"
-							placeholder="Confirm Password"
+							placeholder="Password"
 							{...methods.register("confirmPassword")}
 						/>
 					</RHFInputGroup>
 
                               <Button
                                     color="blue"
-                                    loading={false}
+                                    loading={isPending}
                                     size="lg"
                                     type="submit"
                                     variant="filled"

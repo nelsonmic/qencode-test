@@ -8,6 +8,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { emailSchema } from "@/core/validators";
 import { useRouter } from "next/navigation";
 import { Routes } from "@/core/routing";
+import { useForgotPassword } from "@/hooks/auth/useForgotPassword";
 
 const ForgotPassword = () => {
       const router = useRouter();
@@ -19,9 +20,10 @@ const ForgotPassword = () => {
 		)
 	});
 
-	const onSubmit = methods.handleSubmit((data: { email: string }) => {
-		console.log(data)
-	});
+	const { isPending, forgotPassword } = useForgotPassword();
+	const onSubmit = methods.handleSubmit((data: { email: string }) =>
+		forgotPassword({ email: data.email })
+	);
 
       return (
             <div className="flex items-center flex-col gap-10 w-full">
@@ -43,7 +45,7 @@ const ForgotPassword = () => {
 
                               <Button
                                     color="blue"
-                                    loading={false}
+                                    loading={isPending}
                                     size="lg"
                                     type="submit"
                                     variant="filled"
@@ -52,7 +54,6 @@ const ForgotPassword = () => {
                               </Button>
                               <Button
                                     color="plain"
-                                    loading={false}
                                     size="lg"
                                     type="button"
                                     variant="outline"
