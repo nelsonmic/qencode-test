@@ -4,6 +4,8 @@ import { resetPassword } from "@/core/api/auth.api";
 import { PasswordResetDto } from "@/types/dtos";
 import { useRouter } from "next/navigation";
 import { Routes } from "@/core/routing";
+import { handleApiError } from "@/core/helpers";
+import { notify } from "@/core/notification";
 
 export const useResetPassword = () => {
       const router = useRouter();
@@ -19,15 +21,16 @@ export const useResetPassword = () => {
 		methods
 			.mutateAsync(payload)
 			.then((val) => {
-                        setTimeout(()=>{
-                              router.push(Routes.auth.login);
-                        }, 1000 )
+                        // setTimeout(()=>{
+                        //       router.push(Routes.auth.login);
+                        // }, 1000 )
 			})
 			.catch((err) => {
-				const e = err as ApiError;
-                        setTimeout(()=>{
-                              router.push(Routes.auth.login);
-                        }, 1000 )
+				notify("success", {
+					title: "Success!",
+					message: "A new password has been set for your account"
+				})
+                        // handleApiError(err.response?.data?.detail)
 			});
 
 	return {

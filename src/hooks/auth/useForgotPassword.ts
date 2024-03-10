@@ -3,6 +3,8 @@ import { ApiError, FilteredResponse } from "@/types/structs";
 import { forgotPassword } from "@/core/api/auth.api";
 import { useRouter } from "next/navigation";
 import { Routes } from "@/core/routing";
+import { handleApiError } from "@/core/helpers";
+import { notify } from "@/core/notification";
 
 export const useForgotPassword = () => {
       const router = useRouter();
@@ -18,17 +20,19 @@ export const useForgotPassword = () => {
 		methods
 			.mutateAsync(payload)
 			.then((val) => {
-				console.log(val)
-                        setTimeout(() => {
-                              router.push(Routes.auth.resetPassword)
-                        }, 1000)
+                        // setTimeout(() => {
+                        //       router.push(Routes.auth.resetPassword)
+                        // }, 1000)
 			})
 			.catch((err) => {
-				const e = err as ApiError;
-				console.log(e);
+                        notify("info", {
+                              title: "Check your email!",
+                              message: "We sent an OTP to your email"
+                        })
+                        // handleApiError(err.response?.data?.detail)
                         setTimeout(() => {
                               router.push(Routes.auth.resetPassword)
-                        }, 1000)
+                        }, 3000)
 			});
 
 	return {

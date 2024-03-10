@@ -2,35 +2,42 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+Getting started by cloning the repo onto your machine.
+
+> Make sure you're using node > v20
+
+If you have NVM installed on your machine the `.nvmrc` would pick up the right version when you run:
+
+```
+nvm use
+```
+
+Other wise install the right node version.
+
+Next, install dependencies by running yarn
 
 ```bash
-npm run dev
-# or
+yarn
+```
+
+Run the development server:
+
+```bash
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Details
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Here are a few things to note about the current implemtation:
 
-## Learn More
+- By design the app is setup like a production app not a demo just to show my thought process.
 
-To learn more about Next.js, take a look at the following resources:
+- The password recovery process is simulated as stated in the assignment details. A request is sent to the endpoint with the intentional expectation of failure since no user account has been created. However, when the request fails, it is treated as if it were successful. This same approach is applied to the handling of the reset password endpoint.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- The login endpoint functions correctly, except for the fact that, due to the absence of a created user account, a successful request is managed by displaying a toast notification with a default message.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Deployed to Netlify
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Submission link](https://main--qencode-test-nelson-michael.netlify.app/) - Click the link to interact with this demo.

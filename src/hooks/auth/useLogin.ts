@@ -1,5 +1,7 @@
 import { StorageKeys } from "@/constants/enums";
 import { login } from "@/core/api/auth.api";
+import { handleApiError } from "@/core/helpers";
+import { notify } from "@/core/notification";
 import { LoginDto } from "@/types/dtos";
 import { ApiError, FilteredResponse } from "@/types/structs";
 import { useMutation } from "@tanstack/react-query";
@@ -16,10 +18,13 @@ export const useLogin = () => {
 			.mutateAsync(payload)
 			.then((val) => {
                         setCookie(StorageKeys.TOKEN, val.access_token || "");
+				notify("success", {
+					title: "Success!",
+					message: "Log in successful"
+				})
 			})
 			.catch((err) => {
-				const e = err as ApiError;
-                        console.log(e)
+				handleApiError(err.response?.data?.detail)
 			});
 
 	return {
