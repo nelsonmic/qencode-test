@@ -30,6 +30,9 @@ export const useResetPassword = () => {
 					title: "Success!",
 					message: "A new password has been set for your account"
 				})
+				setTimeout(()=>{
+                              router.push(Routes.auth.login);
+                        }, 3000 )
                         // handleApiError(err.response?.data?.detail)
 			});
 
