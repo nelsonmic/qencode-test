@@ -9,7 +9,7 @@ export const emailSchema = yup
 
 export const signInSchema = yup.object().shape({
   email: emailSchema,
-  password: yup.string().required("Password is required"),
+  password: yup.string().min(8).required("Password is required"),
 });
 
 
@@ -21,5 +21,28 @@ export const resetPasswordSchema = yup.object().shape({
 		.test("passwords-match", "Passwords must match", function (value) {
 			return this.parent.password === value;
 		}),
-	password: yup.string().required("Password is required").min(8)
+	password: yup
+		.string()
+		.required("Password is required")
+		.min(8, "Password should be at least 8 characters long")
+		.test(
+			"has-lowercase",
+			"Password should contain at least one lowercase letter",
+			function (value) {
+				return /[a-z]/.test(value);
+			}
+		)
+		.test(
+			"has-uppercase",
+			"Password should contain at least one uppercase letter",
+			function (value) {
+				return /[A-Z]/.test(value);
+			}
+		)
+		.test(
+			"has-numeric",
+			"Password should contain at least one numeric digit",
+			function (value) {
+				return /\d/.test(value);
+			}),
 });
