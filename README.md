@@ -14,6 +14,8 @@ nvm use
 
 Other wise install the right node version.
 
+> Update your env file following the `.env.example` file. The base url is the provided `API Endpoint/API Version/` on dev and prod
+
 Next, install dependencies by running yarn
 
 ```bash
